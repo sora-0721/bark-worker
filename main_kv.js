@@ -76,6 +76,17 @@ async function handleRequest(request, env, ctx) {
                             requestBody.title = pathParts[2]
                             requestBody.subtitle = pathParts[3]
                             requestBody.body = pathParts[4]
+                        } else if (pathParts.length > 5) {
+                            return new Response(JSON.stringify({
+                                'code': 404,
+                                'message': `Cannot ${request.method} ${realPathname}`,
+                                'timestamp': util.getTimestamp(),
+                            }), {
+                                status: 404,
+                                headers: {
+                                    'content-type': 'application/json',
+                                }
+                            })
                         }
                     }
                     if (requestBody.device_keys && typeof requestBody.device_keys === 'string') {
@@ -172,9 +183,9 @@ async function handleRequest(request, env, ctx) {
 class Handler {
     constructor(env) {
         this.version = "v2.1.5"
-        this.build = "2025-01-01 18:22:43"
+        this.build = "2025-02-06 21:09:16"
         this.arch = "js"
-        this.commit = "552d242c385b24171efd7135824686e90b45bd27"
+        this.commit = "74d827a722d4783976b4afc773c4ace123608d10"
 
         const db = new Database(env)
 
